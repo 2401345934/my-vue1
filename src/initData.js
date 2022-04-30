@@ -12,12 +12,14 @@ export default function initData (vm) {
   // 获取 data 选项
   let { data } = vm.$options
   // 设置 vm._data 选项，保证它的值肯定是一个对象
+  // 如果没有的 data 赋值成默认值 
   if (!data) {
     vm._data = {}
   } else {
+    // 如果是一个函数 就执行  保证得到的是一个对象
     vm._data = typeof data === 'function' ? data() : data
   }
-  // 代理，将 data 对象上的的各个属性代理到 Vue 实例上，支持 通过 this.xx 的方式访问
+  // 代理，将 data 对象上的的各个属性代理到 Vue 实例上，支持 通过 this.xx 的方式访问 
   for (let key in vm._data) {
     proxy(vm, '_data', key)
   }

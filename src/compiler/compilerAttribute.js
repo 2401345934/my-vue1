@@ -1,14 +1,19 @@
 import Watcher from "../watcher.js"
 
+// 处理属性
 export default function compilerAttribute (node, vm) {
+  // 拿到 标签的属性
   const attrs = Array.from(node.attributes)
   for (let attr of attrs) {
     const { name, value } = attr
+    // 处理 v-on
     if (name.match(/v-on:click/)) {
       compilerVOn(node, value, vm)
+      // 处理 v-bind
     } else if (name.match(/v-bind/)) {
       compilerVBind(node, name, value, vm)
     } else if (name.match(/v-model/)) {
+      // 处理 v-model
       compilerVModel(node, value, vm)
     }
   }

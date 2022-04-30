@@ -1,4 +1,3 @@
-import observe from "./observe.js"
 
 /**
  * @description: 数组响应式
@@ -6,10 +5,14 @@ import observe from "./observe.js"
  * @return {*}
  * @author: alan
  */
+// 拿到 Array.prototype 的所有属性
 const arrayProto = Array.prototype
+
 const arrMethods = Object.create(arrayProto)
+// 增强数组的 7个方法
 const methodsToPath = ['push', 'pop', 'shirt', 'splice', 'sort', 'reverse', 'unshift']
 methodsToPath.forEach(method => {
+  // 监听数组的 7个方法
   Object.defineProperty(arrMethods, method, {
     value: function (...rest) {
       const ret = arrayProto[method].apply(this, rest)
@@ -36,7 +39,7 @@ methodsToPath.forEach(method => {
   })
 })
 
-
+// 给数组的 __proto__ 重新设置
 export default function (arr) {
   arr.__proto__ = arrMethods
 }

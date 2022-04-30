@@ -9,6 +9,7 @@ import protoArgument from "./protoArgument.js"
  * @author: alan
  */
 function Observer (value) {
+  // 设置 __ob__ 的 可枚举  防止递归爆栈
   Object.defineProperty(value, '__ob__', {
     value: this,
     //  防止递归爆栈
@@ -16,10 +17,12 @@ function Observer (value) {
     writable: true,
     configurable: true
   })
+  // 把 value.__ob__ 挂一个 dep 用来收集依赖
   value.__ob__.dep = new Dep()
 
   // 数组
   if (Array.isArray(value)) {
+    // 如果是数组 响应式 处理
     protoArgument(value)
     this.observeArray(value)
   } else {
@@ -41,6 +44,7 @@ Observer.prototype.walk = function (obj) {
   }
 }
 
+// 监听数组的每个项
 Observer.prototype.observeArray = function (arr) {
   for (let k in arr) {
     observe(k)

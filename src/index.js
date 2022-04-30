@@ -7,7 +7,9 @@ export default function Vue (options) {
 }
 
 Vue.prototype._init = function (options) {
+  // 拿到所有的配置项 挂在 Vue 实例上
   this.$options = options
+  // 处理配置项
   initData(this)
 
   if (this.$options.el) {
